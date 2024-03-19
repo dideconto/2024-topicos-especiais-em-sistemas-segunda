@@ -1,0 +1,5 @@
+### Listagem de produtos
+GET http://localhost:5076/api/produto
+
+### Cadastro de produtos
+POST http://localhost:5076/api/produto
