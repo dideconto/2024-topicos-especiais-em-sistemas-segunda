@@ -1,5 +1,8 @@
 ### Listagem de produtos
-GET http://localhost:5076/api/produto
+GET http://localhost:5076/api/produto/listar
 
 ### Cadastro de produtos
-POST http://localhost:5076/api/produto
+POST http://localhost:5076/api/produto/cadastrar
+
+### Buscar produto
+GET http://localhost:5076/api/produto/buscar/Celular

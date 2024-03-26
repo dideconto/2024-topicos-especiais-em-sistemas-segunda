@@ -1,23 +1,41 @@
+using API.Models;
+using Microsoft.AspNetCore.Mvc;
+
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
+List<Produto> produtos =
+[
+    new Produto("Celular", "Android", 4500.5),
+    new Produto("Celular", "IOS", 3000),
+    new Produto("Televisão", "LG", 2000),
+    new Produto("Cafeteira", "Oaster", 250)
+];
 
-List<Produto> produtos = new List<Produto>()
+// Endpoints = Funcionalidades - JSON
+// POST: http://localhost:5076/api/produto/cadastrar
+// Cadastrar um produto na lista
+// a) Através das informações na URL
+// b) Através das informações no corpo da requisição
+// Realizar as operações alteração e remoção da lista
+
+app.MapPost("/api/produto/cadastrar", () => "Minha primeira API com watch!");
+
+// GET: http://localhost:5076/api/produto/listar
+app.MapGet("/api/produto/listar", () => produtos);
+
+// GET: http://localhost:5076/api/produto/buscar/{nomedoproduto}
+app.MapGet("/api/produto/buscar/{nome}", ([FromRoute] string nome) =>
 {
-    new Produto("Celular", "Android"),
-    new Produto("Celular", "IOS"),
-    new Produto("Televisão", "LG"),
-    new Produto("Cafeteira", "Oaster")
-};
-
-
-//End Points = Funcionalidades - JSON
-
-// Exercício - Cadastrar um produto na lista de produtos
-app.MapPost("/api/produto", () => "Minha primeira API com watch!");
-
-app.MapGet("/api/produto", () => produtos);
+    //Endpoint com várias linhas de código
+    for (int i = 0; i < produtos.Count; i++)
+    {
+        if (produtos[i].Nome == nome)
+        {
+            return Results.Ok(produtos[i]);
+        }
+    }
+    return Results.NotFound();
+});
 
 app.Run();
-
-public record Produto(string Nome, string Descricao);
