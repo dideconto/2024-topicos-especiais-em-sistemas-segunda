@@ -2,7 +2,14 @@
 GET http://localhost:5076/api/produto/listar
 
 ### Cadastro de produtos
-POST http://localhost:5076/api/produto/cadastrar/TV/LG
+POST http://localhost:5076/api/produto/cadastrar
+Content-Type: application/json
+
+{
+    "nome" : "TV",
+    "descricao" : "47 polegadas",
+    "preco" : 2500.00
+}
 
 ### Buscar produto
 GET http://localhost:5076/api/produto/buscar/Celular
