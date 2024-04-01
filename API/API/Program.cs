@@ -12,14 +12,29 @@ List<Produto> produtos =
     new Produto("Cafeteira", "Oaster", 250)
 ];
 
-// Endpoints = Funcionalidades - JSON
-// POST: http://localhost:5076/api/produto/cadastrar
 // Cadastrar um produto na lista
 // a) Através das informações na URL
 // b) Através das informações no corpo da requisição
 // Realizar as operações alteração e remoção da lista
 
-app.MapPost("/api/produto/cadastrar", () => "Minha primeira API com watch!");
+// Endpoints = Funcionalidades - JSON
+// POST: http://localhost:5076/api/produto/cadastrar
+app.MapPost("/api/produto/cadastrar/",
+    ([FromRoute] string nome, [FromRoute] string descricao) =>
+{
+    //Preenchendo o objeto pelo construtor
+    Produto produto = new Produto(nome, descricao, 123);
+
+    //Preenchendo o objeto pelo atributo
+    produto.Nome = nome;
+    produto.Descricao = descricao;
+
+    //Adicionando o produto dentro da lista
+    produtos.Add(produto);
+
+    return Results.Created("", produto);
+
+});
 
 // GET: http://localhost:5076/api/produto/listar
 app.MapGet("/api/produto/listar", () => produtos);
@@ -35,7 +50,7 @@ app.MapGet("/api/produto/buscar/{nome}", ([FromRoute] string nome) =>
             return Results.Ok(produtos[i]);
         }
     }
-    return Results.NotFound();
+    return Results.NotFound("Produto não encontrado!");
 });
 
 app.Run();
