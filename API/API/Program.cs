@@ -12,21 +12,54 @@ app.MapPost("/api/produto/cadastrar", ([FromBody] Produto produto) =>
 {
     //Adicionando o produto dentro da lista
     produtos.Add(produto);
-    return Results.Created("", produto);
+    return Results.Created($"/api/produto/buscar/{produto.Id}", produto);
 });
 
 // GET: http://localhost:5076/api/produto/listar
 app.MapGet("/api/produto/listar", () => produtos);
 
-// GET: http://localhost:5076/api/produto/buscar/{nomedoproduto}
-app.MapGet("/api/produto/buscar/{nome}", ([FromRoute] string nome) =>
+// GET: http://localhost:5076/api/produto/buscar/{iddoproduto}
+app.MapGet("/api/produto/buscar/{id}", ([FromRoute] string id) =>
 {
     //Endpoint com várias linhas de código
     for (int i = 0; i < produtos.Count; i++)
     {
-        if (produtos[i].Nome == nome)
+        if (produtos[i].Id == id)
         {
             return Results.Ok(produtos[i]);
+        }
+    }
+    return Results.NotFound("Produto não encontrado!");
+});
+
+// DELETE: http://localhost:5076/api/produto/deletar/{iddoproduto}
+app.MapDelete("/api/produto/deletar/{id}", ([FromRoute] string id) =>
+{
+    //Endpoint com várias linhas de código
+    for (int i = 0; i < produtos.Count; i++)
+    {
+        if (produtos[i].Id == id)
+        {
+            produtos.Remove(produtos[i]);
+            return Results.NoContent();
+        }
+    }
+    return Results.NotFound("Produto não encontrado!");
+});
+
+
+// PUT: http://localhost:5076/api/produto/alterar/{iddoproduto}
+app.MapPut("/api/produto/alterar/{id}", ([FromRoute] string id, [FromBody] Produto produtoAlterado) =>
+{
+    //Endpoint com várias linhas de código
+    for (int i = 0; i < produtos.Count; i++)
+    {
+        if (produtos[i].Id == id)
+        {
+            produtos[i].Nome = produtoAlterado.Nome;
+            produtos[i].Descricao = produtoAlterado.Descricao;
+            produtos[i].Preco = produtoAlterado.Preco;
+            return Results.Ok("Produto alterado com sucesso!");
         }
     }
     return Results.NotFound("Produto não encontrado!");

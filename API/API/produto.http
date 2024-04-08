@@ -1,7 +1,7 @@
-### Listagem de produtos
+### Listar produtos
 GET http://localhost:5076/api/produto/listar
 
-### Cadastro de produtos
+### Cadastrar de produtos
 POST http://localhost:5076/api/produto/cadastrar
 Content-Type: application/json
 
@@ -13,3 +13,16 @@ Content-Type: application/json
 
 ### Buscar produto
 GET http://localhost:5076/api/produto/buscar/Celular
+
+### Deletar produto
+DELETE http://localhost:5076/api/produto/deletar/568d9860-143c-453e-b293-7c4ef4bf45fe
+
+### Alterar produto
+PUT http://localhost:5076/api/produto/alterar/b3d128e9-7da7-4eab-a90d-ee123d7b9edb
+Content-Type: application/json
+
+{
+    "nome" : "TV Alterada",
+    "descricao" : "47 polegadas",
+    "preco" : 2500.00
+}
