@@ -66,3 +66,17 @@ app.MapPut("/api/produto/alterar/{id}", ([FromRoute] string id, [FromBody] Produ
 });
 
 app.Run();
+
+//CONFIGURAR O BANCO NA APLICAÇÃO
+//1 - Quais as bibliotecas serão instaladas no projeto
+//2 - O que é necessário adicionar/alterar no projeto
+//para configurar a aplicação com o banco
+
+//dotnet add package Microsoft.EntityFrameworkCore.Sqlite 
+//--version 8.0.3
+//dotnet add package Microsoft.EntityFrameworkCore.Design 
+//--version 8.0.3 
+
+//EXERÍCIOS PARA O EF
+//1 - Cadastrar o objeto de produto no banco
+//2 - Listar os registros da tabela
