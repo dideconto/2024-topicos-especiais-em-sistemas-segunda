@@ -12,7 +12,7 @@ Content-Type: application/json
 }
 
 ### Buscar produto
-GET http://localhost:5076/api/produto/buscar/Celular
+GET http://localhost:5076/api/produto/buscar/1113bed60-2c68-46ff-b7e7-c25f654376e2
 
 ### Deletar produto
 DELETE http://localhost:5076/api/produto/deletar/cd416b97-6ec8-4c9a-a2d0-a833ba5ad71f

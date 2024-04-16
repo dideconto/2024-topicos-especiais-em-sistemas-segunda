@@ -2,34 +2,47 @@ using API.Models;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Registrar o serviço de banco de dados na aplicação
+builder.Services.AddDbContext<AppDataContext>();
+
 var app = builder.Build();
 
 List<Produto> produtos = new List<Produto>();
 
 // Endpoints = Funcionalidades - JSON
 // POST: http://localhost:5076/api/produto/cadastrar
-app.MapPost("/api/produto/cadastrar", ([FromBody] Produto produto) =>
+app.MapPost("/api/produto/cadastrar", ([FromBody] Produto produto,
+    [FromServices] AppDataContext context) =>
 {
-    //Adicionando o produto dentro da lista
-    produtos.Add(produto);
+    //Adicionando o produto dentro da tabela no banco de dados
+    context.Produtos.Add(produto);
+    context.SaveChanges();
     return Results.Created($"/api/produto/buscar/{produto.Id}", produto);
 });
 
 // GET: http://localhost:5076/api/produto/listar
-app.MapGet("/api/produto/listar", () => produtos);
+app.MapGet("/api/produto/listar", ([FromServices] AppDataContext context) =>
+{
+    if (context.Produtos.Any())
+    {
+        return Results.Ok(context.Produtos.ToList());
+    }
+    return Results.NotFound("Não existem produtos na tabela");
+});
 
 // GET: http://localhost:5076/api/produto/buscar/{iddoproduto}
-app.MapGet("/api/produto/buscar/{id}", ([FromRoute] string id) =>
+app.MapGet("/api/produto/buscar/{id}", ([FromRoute] string id,
+    [FromServices] AppDataContext context) =>
 {
     //Endpoint com várias linhas de código
-    for (int i = 0; i < produtos.Count; i++)
+    Produto? produto = context.Produtos.FirstOrDefault(x => x.Id == id);
+
+    if (produto is null)
     {
-        if (produtos[i].Id == id)
-        {
-            return Results.Ok(produtos[i]);
-        }
+        return Results.NotFound("Produto não encontrado!");
     }
-    return Results.NotFound("Produto não encontrado!");
+    return Results.Ok(produto);
 });
 
 // DELETE: http://localhost:5076/api/produto/deletar/{iddoproduto}

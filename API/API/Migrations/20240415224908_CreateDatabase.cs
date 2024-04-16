@@ -19,6 +19,7 @@ namespace API.Migrations
                     Nome = table.Column<string>(type: "TEXT", nullable: true),
                     Descricao = table.Column<string>(type: "TEXT", nullable: true),
                     Preco = table.Column<double>(type: "REAL", nullable: false),
+                    Quantidade = table.Column<int>(type: "INTEGER", nullable: false),
                     CriadoEm = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
