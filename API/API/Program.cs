@@ -7,6 +7,17 @@ var builder = WebApplication.CreateBuilder(args);
 //Registrar o serviço de banco de dados na aplicação
 builder.Services.AddDbContext<AppDataContext>();
 
+builder.Services.AddCors(
+    options =>
+    {
+        options.AddPolicy("AcessoTotal",
+            builder => builder.
+                AllowAnyOrigin().
+                AllowAnyHeader().
+                AllowAnyMethod());
+    }
+);
+
 var app = builder.Build();
 
 List<Produto> produtos = new List<Produto>();
@@ -103,6 +114,7 @@ app.MapPut("/api/produto/alterar/{id}", ([FromRoute] string id,
     return Results.Ok("Produto alterado com sucesso!");
 });
 
+app.UseCors("AcessoTotal");
 app.Run();
 
 //CONFIGURAR O BANCO NA APLICAÇÃO

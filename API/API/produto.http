@@ -6,7 +6,7 @@ POST http://localhost:5076/api/produto/cadastrar
 Content-Type: application/json
 
 {
-    "nome" : "TV4",
+    "nome" : "TV5",
     "descricao" : "Android",
     "preco" : 1000
 }
