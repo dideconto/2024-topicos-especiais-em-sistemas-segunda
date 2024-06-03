@@ -27,26 +27,6 @@ function ProdutoListar() {
       });
   }
 
-  function cadastrar() {
-    const produto: Produto = {
-      nome: "Teste APP Visual",
-      descricao: "Teste APP Visual",
-      preco: 147,
-      quantidade: 1500,
-    };
-    fetch("http://localhost:5076/api/produto/cadastrar", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(produto),
-    })
-      .then((resposta) => resposta.json())
-      .then((produtoCadastrado: Produto) => {
-        console.log(produtoCadastrado);
-      });
-  }
-
   return (
     <div>
       <h1>Listar Produtos</h1>
@@ -74,7 +54,6 @@ function ProdutoListar() {
           ))}
         </tbody>
       </table>
-      <button onClick={cadastrar}>Cadastrar</button>
     </div>
   );
 }

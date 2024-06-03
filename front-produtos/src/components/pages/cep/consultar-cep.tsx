@@ -32,6 +32,7 @@ function ConsultarCep() {
 
   return (
     <div>
+      <h1>Consultar CEP</h1>
       <input
         type="text"
         placeholder="CEP"
