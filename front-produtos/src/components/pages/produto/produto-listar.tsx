@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Produto } from "../../../models/Produto";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 //EXERCÍCIOS
 //1 - Implementar o cadastro a partir do formulário
@@ -27,6 +29,17 @@ function ProdutoListar() {
       });
   }
 
+  function deletar(id: string): void {
+    console.log(`http://localhost:5076/${id}`);
+    axios
+      .delete<Produto[]>(
+        `http://localhost:5076/api/produto/deletar/${id}`
+      )
+      .then((resposta) => {
+        setProdutos(resposta.data);
+      });
+  }
+
   return (
     <div>
       <h1>Listar Produtos</h1>
@@ -50,6 +63,16 @@ function ProdutoListar() {
               <td>{produto.preco}</td>
               <td>{produto.quantidade}</td>
               <td>{produto.criadoEm}</td>
+              <td>
+                <button onClick={() => deletar(produto.id!)}>
+                  Deletar
+                </button>
+              </td>
+              <td>
+                <Link to={`/produto/alterar/${produto.id}`}>
+                  Alterar
+                </Link>
+              </td>
             </tr>
           ))}
         </tbody>

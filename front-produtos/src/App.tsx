@@ -3,6 +3,7 @@ import ProdutoListar from "./components/pages/produto/produto-listar";
 import ConsultarCep from "./components/pages/cep/consultar-cep";
 import ProdutoCadastrar from "./components/pages/produto/produto-cadastrar";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import ProdutoAlterar from "./components/pages/produto/produto-alterar";
 
 function App() {
   return (
@@ -27,7 +28,14 @@ function App() {
         <Routes>
           <Route path="/" element={<ProdutoListar />} />
           <Route path="/produto/listar" element={<ProdutoListar />} />
-          <Route path="/produto/cadastrar" element={<ProdutoCadastrar />} />
+          <Route
+            path="/produto/cadastrar"
+            element={<ProdutoCadastrar />}
+          />
+          <Route
+            path="/produto/alterar/:id"
+            element={<ProdutoAlterar />}
+          />
           <Route path="/cep/consultar" element={<ConsultarCep />} />
         </Routes>
         <footer>

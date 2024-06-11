@@ -87,7 +87,7 @@ app.MapDelete("/api/produto/deletar/{id}", ([FromRoute] string id,
     }
     context.Produtos.Remove(produto);
     context.SaveChanges();
-    return Results.Ok(produto);
+    return Results.Ok(context.Produtos.ToList());
 });
 
 
